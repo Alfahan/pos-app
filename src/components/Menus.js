@@ -2,10 +2,10 @@ import React from "react";
 import { Col, Card } from "react-bootstrap";
 import { numberWithCommas } from "../utils/utils";
 
-function Menus({ menu }) {
+function Menus({ menu, cekInCart }) {
   return (
     <Col md={4} xs={6} className="mb-4">
-      <Card className="shadow">
+      <Card className="shadow" onClick={() => cekInCart(menu)}>
         <Card.Img
           variant="top"
           src={
@@ -17,9 +17,16 @@ function Menus({ menu }) {
         />
         <Card.Body>
           <Card.Title>
-            {menu.nama} | <strong>{menu.kode}</strong>
+            <h6>
+              {menu.nama}
+              <br />
+              <strong>{menu.kode}</strong>
+            </h6>
+            <hr />
           </Card.Title>
-          <Card.Text>Rp. {numberWithCommas(menu.harga)}</Card.Text>
+          <Card.Text>
+            Rp. <strong>{numberWithCommas(menu.harga)}</strong>
+          </Card.Text>
         </Card.Body>
       </Card>
     </Col>

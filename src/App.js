@@ -9,6 +9,7 @@ import {
 } from "../src/components/";
 import { API_URL } from "./utils/constants";
 import axios from "axios";
+import swal from "sweetalert";
 
 export default class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class App extends Component {
     this.state = {
       menus: [],
       chooseCategory: "Makanan",
+      carts: [],
     };
   }
 
@@ -48,6 +50,24 @@ export default class App extends Component {
       });
   };
 
+  cekInCart = (value) => {
+    const cart = {};
+
+    axios
+      .get(API_URL + "keranjangs" + value)
+      .then((res) => {
+        swal({
+          title: "Success!",
+          text: "Success Cek In Cart",
+          icon: "success",
+          button: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const { menus, chooseCategory } = this.state;
     return (
@@ -61,13 +81,19 @@ export default class App extends Component {
                 chooseCategory={chooseCategory}
               />
               <Col>
-                <h4>
-                  <strong>Daftar Produk</strong>
-                </h4>
+                <h5>
+                  <strong>List Produk</strong>
+                </h5>
                 <hr />
                 <Row>
                   {menus &&
-                    menus.map((menu) => <Menus key={menu.id} menu={menu} />)}
+                    menus.map((menu) => (
+                      <Menus
+                        key={menu.id}
+                        menu={menu}
+                        cekInCart={this.cekInCart}
+                      />
+                    ))}
                 </Row>
               </Col>
               <Result />
