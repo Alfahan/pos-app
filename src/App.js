@@ -23,7 +23,6 @@ export default class App extends Component {
     axios
       .get(API_URL + "products")
       .then((res) => {
-        // console.log(res);
         const menus = res.data;
         this.setState({ menus });
       })
@@ -33,7 +32,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.menus);
     const { menus } = this.state;
     return (
       <div className="App">
