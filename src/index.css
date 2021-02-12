@@ -1,15 +1,21 @@
 body {
   margin: 0;
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.navbar{
-  background-color:  #1a8cff  ;
+.navbar {
+  background-color: #1a8cff;
+}
+
+.category-aktif {
+  background-color: #1a8cff;
+  color: white;
+  cursor: pointer;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
