@@ -147,7 +147,7 @@ export default class Home extends Component {
                   ))}
               </Row>
             </Col>
-            <Result carts={carts} />
+            <Result carts={carts} {...this.props} />
           </Row>
         </Container>
       </div>
