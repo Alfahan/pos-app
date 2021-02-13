@@ -32,6 +32,30 @@ export default class App extends Component {
       .catch((err) => {
         console.log(err);
       });
+
+    axios
+      .get(API_URL + "keranjangs")
+      .then((res) => {
+        const carts = res.data;
+        this.setState({ carts });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.carts !== prevState.carts) {
+      axios
+        .get(API_URL + "keranjangs")
+        .then((res) => {
+          const carts = res.data;
+          this.setState({ carts });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   changeCategory = (value) => {
@@ -51,17 +75,52 @@ export default class App extends Component {
   };
 
   cekInCart = (value) => {
-    const cart = {};
-
     axios
-      .get(API_URL + "keranjangs" + value)
+      .get(API_URL + "keranjangs?product.id=" + value.id)
       .then((res) => {
-        swal({
-          title: "Success!",
-          text: "Success Cek In Cart",
-          icon: "success",
-          button: false,
-        });
+        if (res.data.length === 0) {
+          const cart = {
+            qty: 1,
+            sub_total: value.harga,
+            product: value,
+          };
+
+          axios
+            .post(API_URL + "keranjangs", cart)
+            .then((res) => {
+              swal({
+                title: "Success!",
+                text: "Success, In Cart " + cart.product.nama,
+                icon: "success",
+                button: false,
+                timer: 1500,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          const cart = {
+            qty: res.data[0].qty + 1,
+            sub_total: res.data[0].sub_total + value.harga,
+            product: value,
+          };
+
+          axios
+            .put(API_URL + "keranjangs/" + res.data[0].id, cart)
+            .then((res) => {
+              swal({
+                title: "Success!",
+                text: "Success, In Cart " + cart.product.nama,
+                icon: "success",
+                button: false,
+                timer: 1500,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +128,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { menus, chooseCategory } = this.state;
+    const { menus, chooseCategory, carts } = this.state;
     return (
       <div className="App">
         <NavbarComponent />
@@ -96,7 +155,7 @@ export default class App extends Component {
                     ))}
                 </Row>
               </Col>
-              <Result />
+              <Result carts={carts} />
             </Row>
           </Container>
         </div>
