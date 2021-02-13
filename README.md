@@ -1,5 +1,7 @@
 Preview Web App With React JS
 
+And for the Backend. You can visit this repository : https://github.com/Alfahan/backend-pos.git
+
 Web :
 
 ![Screenshot from 2021-02-13 23-18-48](https://user-images.githubusercontent.com/49190810/107855039-b4863500-6e52-11eb-857d-7014ebeb054d.png)
