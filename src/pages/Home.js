@@ -117,6 +117,7 @@ export default class Home extends Component {
           axios
             .put(API_URL + "keranjangs/" + res.data[0].id, cart)
             .then((res) => {
+              this.getListCart();
               swal({
                 title: "Success!",
                 text: "Success, In Cart " + cart.product.nama,
