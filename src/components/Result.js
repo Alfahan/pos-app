@@ -12,7 +12,7 @@ export default class Result extends Component {
         {carts.length !== 0 && (
           <ListGroup variant="flush">
             {carts.map((cartDetail) => (
-              <ListGroup.Item>
+              <ListGroup.Item key={cartDetail.product.id}>
                 <Row>
                   <Col>
                     <Badge pill variant="success">
@@ -20,7 +20,7 @@ export default class Result extends Component {
                     </Badge>
                   </Col>
                   <Col>
-                    <h7>{cartDetail.product.nama}</h7>
+                    <h6>{cartDetail.product.nama}</h6>
                     <p>Rp. {numberWithCommas(cartDetail.product.harga)}</p>
                   </Col>
                   <Col>
