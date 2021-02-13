@@ -19,6 +19,19 @@ body {
   background-color: #1a8cff;
 }
 
+@media only screen and (max-height: 1000px) {
+  .result {
+    height: 500px;
+  }
+  .menu {
+    height: 800px;
+  }
+}
+
+.overflow-auto ::-webkit-scrollbar {
+  display: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

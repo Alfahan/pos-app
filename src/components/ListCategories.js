@@ -44,7 +44,7 @@ export default class ListCategories extends Component {
     const { categories } = this.state;
     const { changeCategory, chooseCategory } = this.props;
     return (
-      <Col md={2} mt="2">
+      <Col md={2} mt="3">
         <h5>List Categories</h5>
         <hr />
         <ListGroup as="ul">

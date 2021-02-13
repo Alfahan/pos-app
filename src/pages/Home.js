@@ -27,6 +27,34 @@ export default class Home extends Component {
         console.log(err);
       });
 
+    // axios
+    //   .get(API_URL + "keranjangs")
+    //   .then((res) => {
+    //     const carts = res.data;
+    //     this.setState({ carts });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    this.getListCart();
+  }
+
+  // componentDidUpdate(prevState) {
+  //   if (this.state.carts !== prevState.carts) {
+  //     axios
+  //       .get(API_URL + "keranjangs")
+  //       .then((res) => {
+  //         const carts = res.data;
+  //         this.setState({ carts });
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }
+
+  getListCart = () => {
     axios
       .get(API_URL + "keranjangs")
       .then((res) => {
@@ -36,22 +64,7 @@ export default class Home extends Component {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  componentDidUpdate(prevState) {
-    if (this.state.carts !== prevState.carts) {
-      axios
-        .get(API_URL + "keranjangs")
-        .then((res) => {
-          const carts = res.data;
-          this.setState({ carts });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
+  };
   changeCategory = (value) => {
     this.setState({
       chooseCategory: value,
@@ -82,6 +95,7 @@ export default class Home extends Component {
           axios
             .post(API_URL + "keranjangs", cart)
             .then((res) => {
+              this.getListCart();
               swal({
                 title: "Success!",
                 text: "Success, In Cart " + cart.product.nama,
@@ -131,12 +145,12 @@ export default class Home extends Component {
               changeCategory={this.changeCategory}
               chooseCategory={chooseCategory}
             />
-            <Col>
+            <Col className="mt-2">
               <h5>
-                <strong>List Produk</strong>
+                <strong>List Product</strong>
               </h5>
               <hr />
-              <Row>
+              <Row className="overflow-auto menu">
                 {menus &&
                   menus.map((menu) => (
                     <Menus
@@ -147,7 +161,11 @@ export default class Home extends Component {
                   ))}
               </Row>
             </Col>
-            <Result carts={carts} {...this.props} />
+            <Result
+              carts={carts}
+              {...this.props}
+              getListCart={this.getListCart}
+            />
           </Row>
         </Container>
       </div>

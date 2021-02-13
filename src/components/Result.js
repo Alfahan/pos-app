@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, ListGroup, Row, Badge } from "react-bootstrap";
+import { Col, ListGroup, Row, Badge, Card } from "react-bootstrap";
 import { numberWithCommas } from "../utils/utils";
 import ModalCarts from "./ModalCarts";
 import TotalBayar from "./TotalBayar";
@@ -56,6 +56,7 @@ export default class Result extends Component {
     axios
       .put(API_URL + "keranjangs/" + this.state.cartDetails.id, data)
       .then((res) => {
+        this.props.getListCart();
         swal({
           title: "Update!",
           text: "Success, Update Cart " + data.product.nama,
@@ -70,12 +71,14 @@ export default class Result extends Component {
   };
 
   deleteCart = (id) => {
+    this.handleClose();
     axios
       .delete(API_URL + "keranjangs/" + id)
       .then((res) => {
+        this.props.getListCart();
         swal({
           title: "Delete!",
-          text: "Delete, Delete Cart " + this.state.cartDetail.product.nama,
+          text: "Delete, Delete Cart " + this.state.cartDetails.product.nama,
           icon: "error",
           button: false,
           timer: 1500,
@@ -105,45 +108,48 @@ export default class Result extends Component {
   render() {
     const { carts } = this.props;
     return (
-      <Col md={3} mt="2">
+      <Col md={3} mt="3">
         <h5>Result</h5>
         <hr />
         {carts.length !== 0 && (
-          <ListGroup variant="flush">
-            {carts.map((cartDetail) => (
-              <ListGroup.Item
-                key={cartDetail.product.id}
-                onClick={() => this.handleShow(cartDetail)}
-              >
-                <Row>
-                  <Col>
-                    <Badge pill variant="success">
-                      {cartDetail.qty}
-                    </Badge>
-                  </Col>
-                  <Col>
-                    <h6>{cartDetail.product.nama}</h6>
-                    <p>Rp. {numberWithCommas(cartDetail.product.harga)}</p>
-                  </Col>
-                  <Col>
-                    <strong className="float-right">
-                      Rp. {numberWithCommas(cartDetail.sub_total)}
-                    </strong>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            ))}
-            <ModalCarts
-              handleClose={this.handleClose}
-              {...this.state}
-              plus={this.plus}
-              minus={this.minus}
-              changeHandler={this.changeHandler}
-              handleSubmit={this.handleSubmit}
-              deleteCart={this.deleteCart}
-            />
-          </ListGroup>
+          <Card className="overflow-auto result">
+            <ListGroup variant="flush">
+              {carts.map((cartDetail) => (
+                <ListGroup.Item
+                  key={cartDetail.product.id}
+                  onClick={() => this.handleShow(cartDetail)}
+                >
+                  <Row>
+                    <Col>
+                      <Badge pill variant="success">
+                        {cartDetail.qty}
+                      </Badge>
+                    </Col>
+                    <Col>
+                      <h6>{cartDetail.product.nama}</h6>
+                      <p>Rp. {numberWithCommas(cartDetail.product.harga)}</p>
+                    </Col>
+                    <Col>
+                      <strong className="float-right">
+                        Rp. {numberWithCommas(cartDetail.sub_total)}
+                      </strong>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+              <ModalCarts
+                handleClose={this.handleClose}
+                {...this.state}
+                plus={this.plus}
+                minus={this.minus}
+                changeHandler={this.changeHandler}
+                handleSubmit={this.handleSubmit}
+                deleteCart={this.deleteCart}
+              />
+            </ListGroup>
+          </Card>
         )}
+
         <TotalBayar carts={carts} {...this.props} />
       </Col>
     );

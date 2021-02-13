@@ -25,27 +25,54 @@ export default class TotalBayar extends Component {
     }, 0);
 
     return (
-      <div className="fixed-bottom">
-        <Row>
-          <Col md={{ span: 3, offset: 9 }} className="px-4">
-            <h4>
-              Total Bayar :{" "}
-              <strong className="float-right mr-2">
-                Rp. {numberWithCommas(total)}
-              </strong>
-            </h4>
-            <Button
-              variant="primary"
-              className="mb-3 mt-2 mr-2"
-              size="lg"
-              block
-              onClick={() => this.submitTotal(total)}
-            >
-              <FontAwesomeIcon icon={faShoppingCart} /> <strong>BAYAR</strong>
-            </Button>
-          </Col>
-        </Row>
-      </div>
+      <>
+        {/* { WEB } */}
+        <div className="fixed-bottom d-none d-md-block">
+          <Row>
+            <Col md={{ span: 3, offset: 9 }} className="px-4">
+              <h4>
+                Total Bayar :{" "}
+                <strong className="float-right mr-2">
+                  Rp. {numberWithCommas(total)}
+                </strong>
+              </h4>
+              <Button
+                variant="primary"
+                className="mb-3 mt-2 mr-2"
+                size="lg"
+                block
+                onClick={() => this.submitTotal(total)}
+              >
+                <FontAwesomeIcon icon={faShoppingCart} /> <strong>BAYAR</strong>
+              </Button>
+            </Col>
+          </Row>
+        </div>
+
+        {/* { Mobile } */}
+
+        <div className="d-sm-block d-md-none">
+          <Row>
+            <Col md={{ span: 3, offset: 9 }} className="px-4">
+              <h4>
+                Total Bayar :{" "}
+                <strong className="float-right mr-2">
+                  Rp. {numberWithCommas(total)}
+                </strong>
+              </h4>
+              <Button
+                variant="primary"
+                className="mb-3 mt-2 mr-2"
+                size="lg"
+                block
+                onClick={() => this.submitTotal(total)}
+              >
+                <FontAwesomeIcon icon={faShoppingCart} /> <strong>BAYAR</strong>
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      </>
     );
   }
 }
