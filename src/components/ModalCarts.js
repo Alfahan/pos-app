@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { numberWithCommas } from "../utils/utils";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const ModalCarts = ({
   showModal,
@@ -14,6 +14,8 @@ const ModalCarts = ({
   minus,
   changeHandler,
   handleSubmit,
+  subTotal,
+  deleteCart,
 }) => {
   if (cartDetails) {
     return (
@@ -29,9 +31,7 @@ const ModalCarts = ({
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Total Harga</Form.Label>
               <p>
-                <strong>
-                  Rp. {numberWithCommas(cartDetails.product.harga)}
-                </strong>
+                <strong>Rp. {numberWithCommas(subTotal)}</strong>
               </p>
             </Form.Group>
 
@@ -42,16 +42,16 @@ const ModalCarts = ({
                 variant="primary"
                 size="sm"
                 className="mr-2"
-                onClick={() => plus()}
+                onClick={() => minus()}
               >
-                <FontAwesomeIcon icon={faPlus} />
+                <FontAwesomeIcon icon={faMinus} />
               </Button>
               <strong>{qty}</strong>
               <Button
                 variant="primary"
                 size="sm"
                 className="ml-2"
-                onClick={() => minus()}
+                onClick={() => plus()}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
@@ -74,7 +74,7 @@ const ModalCarts = ({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger">
+          <Button variant="danger" onClick={() => deleteCart(cartDetails.id)}>
             <FontAwesomeIcon icon={faTrash} /> Hapus Pesanan
           </Button>
         </Modal.Footer>
